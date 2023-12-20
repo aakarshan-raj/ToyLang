@@ -1,0 +1,24 @@
+{
+  "name": "ToyLang",
+  "version": "1.0.0",
+  "description": "This project is about learning how to create your own programming language. We will be using typescript. using tsc typescript code will be transpilled to javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "cd Lexer && tsc lexer.ts && node lexer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aakarshan-raj/ToyLang.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aakarshan-raj/ToyLang/issues"
+  },
+  "homepage": "https://github.com/aakarshan-raj/ToyLang#readme",
+  "devDependencies": {
+    "@types/node": "^20.10.5"
+  }
+}
