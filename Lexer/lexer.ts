@@ -21,7 +21,7 @@ function Fill(value: string, type: Type) {
     return t;
 }
 
-function range(a: string, b: string, c: string): boolean {
+export function range(a: string, b: string, c: string): boolean {
     const bound = [a.charCodeAt(0), b.charCodeAt(0)];
     const target = c.charCodeAt(0);
     if (target >= bound[0] && target <= bound[1]) {
@@ -30,12 +30,12 @@ function range(a: string, b: string, c: string): boolean {
     return false;
 }
 
-function isAlpha(c: string) {
-    return range("a", "b", c);
+export function isAlpha(c: string) {
+    return range("A", "z", c);
 }
 
 
-function isNum(c: string) {
+export function isNum(c: string) {
     return range("0", "9", c);
 }
 
@@ -62,12 +62,12 @@ function Lexer(src: string): Token[] {
     return token;
 }
 
-const code = fs.readFileSync("code.tl","utf-8");
+// const code = fs.readFileSync("code.tl","utf-8");
 
-const data = Lexer(code);
-for (const x of data){
-    console.log(x);
-}
+// const data = Lexer(code);
+// for (const x of data){
+//     console.log(x);
+// }
 
 const a = '1';
 console.log(isNum(a));

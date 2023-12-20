@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.isNum = exports.isAlpha = exports.range = void 0;
 var fs = require("fs");
 var Type;
 (function (Type) {
@@ -23,12 +26,15 @@ function range(a, b, c) {
     }
     return false;
 }
+exports.range = range;
 function isAlpha(c) {
-    return range("a", "b", c);
+    return range("A", "z", c);
 }
+exports.isAlpha = isAlpha;
 function isNum(c) {
     return range("0", "9", c);
 }
+exports.isNum = isNum;
 function Lexer(src) {
     var token = Array();
     var source = src.split("");
@@ -51,11 +57,10 @@ function Lexer(src) {
     }
     return token;
 }
-var code = fs.readFileSync("code.tl", "utf-8");
-var data = Lexer(code);
-for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
-    var x = data_1[_i];
-    console.log(x);
-}
+// const code = fs.readFileSync("code.tl","utf-8");
+// const data = Lexer(code);
+// for (const x of data){
+//     console.log(x);
+// }
 var a = '1';
 console.log(isNum(a));
