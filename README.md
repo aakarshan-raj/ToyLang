@@ -5,3 +5,5 @@ We will be using typescript.
 using tsc typescript code will be transpilled to javascript
 
 Future Aspect: Implement This in Rust.
+
+![image description](Diagram/img/ToyLang.jpg)
