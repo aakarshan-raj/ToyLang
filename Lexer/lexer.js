@@ -28,7 +28,7 @@ function range(a, b, c) {
 }
 exports.range = range;
 function isAlpha(c) {
-    return range("A", "z", c);
+    return (range("A", "Z", c) || range("a", "z", c));
 }
 exports.isAlpha = isAlpha;
 function isNum(c) {

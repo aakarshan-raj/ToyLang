@@ -31,7 +31,7 @@ export function range(a: string, b: string, c: string): boolean {
 }
 
 export function isAlpha(c: string) {
-    return range("A", "z", c);
+    return (range("A", "Z", c) || range("a", "z", c));
 }
 
 

@@ -26,3 +26,10 @@ test("Num test", () => {
         expect(value).toBe(true);
     }
 })
+
+test("Single alpha test", () => {
+    
+    let value = isAlpha("[");
+    expect(value).toBe(true);
+    
+})
