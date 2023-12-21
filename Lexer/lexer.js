@@ -13,7 +13,12 @@ var Type;
     Type[Type["Let"] = 6] = "Let";
     Type[Type["Identifier"] = 7] = "Identifier";
     Type[Type["WhiteSpace"] = 8] = "WhiteSpace";
+    Type[Type["SemiColon"] = 9] = "SemiColon";
+    Type[Type["NewLine"] = 10] = "NewLine";
 })(Type || (Type = {}));
+var reserved = {
+    let: Type.Let
+};
 function Fill(value, type) {
     var t = { value: value, type: type };
     return t;
@@ -51,16 +56,48 @@ function Lexer(src) {
         else if (source[0] == "*" || source[0] == "/" || source[0] == "+" || source[0] == "-") {
             token.push(Fill(source.shift(), Type.BinaryOperator));
         }
+        else if (source[0] == " ") {
+            token.push(Fill(source.shift(), Type.WhiteSpace));
+        }
+        else if (source[0] == ";") {
+            token.push(Fill(source.shift(), Type.SemiColon));
+        }
+        else if (source[0] == "\n") {
+            token.push(Fill(source.shift(), Type.NewLine));
+        }
         else {
-            console.log("This is not yet covered:" + source.shift());
+            // Covering all other cases
+            if (isAlpha(source[0])) {
+                var iden = "";
+                while (source.length > 0 && isAlpha(source[0])) {
+                    iden += source.shift();
+                }
+                var reserved_token = reserved[iden];
+                if (reserved_token) {
+                    token.push(Fill(iden, reserved_token));
+                }
+                else {
+                    token.push(Fill(iden, Type.Identifier));
+                }
+            }
+            else if (isNum(source[0])) {
+                var num = "";
+                while (source.length > 0 && isNum(source[0])) {
+                    num += source.shift();
+                }
+                token.push(Fill(num, Type.Number));
+            }
+            else {
+                console.log("UNRECOGNISED CHARACTOR:" + source[0]);
+                process.exit(1);
+            }
         }
     }
     return token;
 }
-// const code = fs.readFileSync("code.tl","utf-8");
-// const data = Lexer(code);
-// for (const x of data){
-//     console.log(x);
-// }
-var a = '1';
-console.log(isNum(a));
+var code = fs.readFileSync("code.tl", "utf-8");
+var data = Lexer(code);
+for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
+    var x = data_1[_i];
+    console.log(x);
+}
