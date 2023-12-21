@@ -1,4 +1,7 @@
+const { describe } = require("node:test");
 const { isAlpha, isNum } = require("../Lexer/lexer.js")
+
+describe("conversion tests:",()=>{
 
 test("Alpha test", () => {
     let a_z = [];
@@ -29,7 +32,8 @@ test("Num test", () => {
 
 test("Single alpha test", () => {
     
-    let value = isAlpha("[");
+    let value = isAlpha("x");
     expect(value).toBe(true);
     
+})
 })
