@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "lexer": "cd Lexer && clear && tsc lexer.ts && node lexer.js"
+    "lexer": "cd Lexer && clear && tsc lexer.ts && node lexer.js",
+    "ast": "cd AST && clear && tsc ast.ts && node ast.js"
+
   },
   "repository": {
     "type": "git",
