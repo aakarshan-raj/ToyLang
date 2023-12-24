@@ -1,20 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isNum = exports.isAlpha = exports.range = void 0;
+exports.isIgnoreable = exports.isNum = exports.isAlpha = exports.range = void 0;
 var fs = require("fs");
 var Type;
 (function (Type) {
     Type[Type["Equal"] = 0] = "Equal";
-    Type[Type["Colon"] = 1] = "Colon";
-    Type[Type["BinaryOperator"] = 2] = "BinaryOperator";
-    Type[Type["CloseParen"] = 3] = "CloseParen";
-    Type[Type["OpenParen"] = 4] = "OpenParen";
-    Type[Type["Number"] = 5] = "Number";
-    Type[Type["Let"] = 6] = "Let";
-    Type[Type["Identifier"] = 7] = "Identifier";
-    Type[Type["WhiteSpace"] = 8] = "WhiteSpace";
-    Type[Type["SemiColon"] = 9] = "SemiColon";
-    Type[Type["NewLine"] = 10] = "NewLine";
+    Type[Type["BinaryOperator"] = 1] = "BinaryOperator";
+    Type[Type["CloseParen"] = 2] = "CloseParen";
+    Type[Type["OpenParen"] = 3] = "OpenParen";
+    Type[Type["Number"] = 4] = "Number";
+    Type[Type["Let"] = 5] = "Let";
+    Type[Type["Identifier"] = 6] = "Identifier";
+    Type[Type["EOF"] = 7] = "EOF";
 })(Type || (Type = {}));
 var reserved = {
     let: Type.Let
@@ -40,6 +37,13 @@ function isNum(c) {
     return range("0", "9", c);
 }
 exports.isNum = isNum;
+function isIgnoreable(str) {
+    if (str == " " || str == "\n") {
+        return true;
+    }
+    return false;
+}
+exports.isIgnoreable = isIgnoreable;
 function Lexer(src) {
     var token = Array();
     var source = src.split("");
@@ -56,14 +60,8 @@ function Lexer(src) {
         else if (source[0] == "*" || source[0] == "/" || source[0] == "+" || source[0] == "-") {
             token.push(Fill(source.shift(), Type.BinaryOperator));
         }
-        else if (source[0] == " ") {
-            token.push(Fill(source.shift(), Type.WhiteSpace));
-        }
-        else if (source[0] == ";") {
-            token.push(Fill(source.shift(), Type.SemiColon));
-        }
-        else if (source[0] == "\n") {
-            token.push(Fill(source.shift(), Type.NewLine));
+        else if (isIgnoreable(source[0])) {
+            source.shift();
         }
         else {
             // Covering all other cases
@@ -93,6 +91,7 @@ function Lexer(src) {
             }
         }
     }
+    token.push(Fill("EOF", Type.EOF));
     return token;
 }
 var code = fs.readFileSync("code.tl", "utf-8");

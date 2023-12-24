@@ -2,16 +2,13 @@ const fs = require("fs");
 
 enum Type {
     Equal,
-    Colon,
     BinaryOperator,
     CloseParen,
     OpenParen,
     Number,
     Let,
     Identifier,
-    WhiteSpace,
-    SemiColon,
-    NewLine,
+    EOF
 }
 interface Token {
     value: string,
@@ -36,13 +33,20 @@ export function range(a: string, b: string, c: string): boolean {
     return false;
 }
 
-export function isAlpha(c: string) {
+export function isAlpha(c: string):boolean{
     return (range("A", "Z", c) || range("a", "z", c));
 }
 
 
-export function isNum(c: string) {
+export function isNum(c: string):boolean{
     return range("0", "9", c);
+}
+
+export function isIgnoreable(str:string):boolean{
+    if (str == " " || str == "\n"){
+        return true;
+    }
+    return false;
 }
 
 function Lexer(src: string): Token[] {
@@ -61,14 +65,8 @@ function Lexer(src: string): Token[] {
         else if (source[0] == "*" || source[0] == "/" || source[0] == "+" || source[0] == "-") {
             token.push(Fill(source.shift(), Type.BinaryOperator));
         }
-        else if (source[0] == " ") {
-            token.push(Fill(source.shift(), Type.WhiteSpace));
-        }
-        else if (source[0] == ";") {
-            token.push(Fill(source.shift(), Type.SemiColon));
-        }
-        else if (source[0] == "\n") {
-            token.push(Fill(source.shift(), Type.NewLine));
+        else if(isIgnoreable(source[0])){
+            source.shift();
         }
         else {
             // Covering all other cases
@@ -99,6 +97,7 @@ function Lexer(src: string): Token[] {
             }
         }
     }
+    token.push(Fill("EOF",Type.EOF));
     return token;
 }
 
