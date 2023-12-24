@@ -1,5 +1,5 @@
 const fs = require('fs');
-import { Lexer,Type } from "../Lexer/lexer";
+import { Lexer,Token, Type } from "../Lexer/lexer";
 import {
     Program, Statement, BinaryExpression,
     NumericalLiteral, Identifier, NodeType,
@@ -10,15 +10,21 @@ import {
 
 class Parser{
 
- private TOKEN:Type[] = [];
+ private TOKEN:Token[] = [];
+
+ public NotTheEnd():boolean{
+    return this.TOKEN[0].type != Type.EOF;
+ }
 
  public GenerateAst(source_code:string){
-    const tokens = Lexer(source_code);
+    this.TOKEN = Lexer(source_code);
     const program:Program = {
         kind:"PROGRAM",
         body:[]
     }
- 
+    while(this.NotTheEnd()){
+       console.log(this.TOKEN[0]);
+    }
 
  }
 

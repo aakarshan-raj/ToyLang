@@ -10,7 +10,7 @@ export enum Type {
     Identifier,
     EOF
 }
-interface Token {
+export interface Token {
     value: string,
     type: Type
 }
