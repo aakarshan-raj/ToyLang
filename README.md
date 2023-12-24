@@ -6,4 +6,6 @@ using tsc typescript code will be transpilled to javascript
 
 Future Aspect: Implement This in Rust.
 
-![image description](Diagram/img/ToyLang.jpg)
+![Whole pipeline(Not complete)](Diagram/img/ToyLang.jpg)
+
+![Interface and Type for AST](Diagram/img/interface.jpg)
