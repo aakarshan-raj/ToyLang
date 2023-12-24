@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-enum Type {
+export enum Type {
     Equal,
     BinaryOperator,
     CloseParen,
@@ -49,7 +49,7 @@ export function isIgnoreable(str:string):boolean{
     return false;
 }
 
-function Lexer(src: string): Token[] {
+export function Lexer(src: string): Token[] {
     const token = Array<Token>();
     const source = src.split("");
     while (source.length > 0) {
@@ -99,12 +99,5 @@ function Lexer(src: string): Token[] {
     }
     token.push(Fill("EOF",Type.EOF));
     return token;
-}
-
-const code = fs.readFileSync("code.tl", "utf-8");
-
-const data = Lexer(code);
-for (const x of data) {
-    console.log(x);
 }
 

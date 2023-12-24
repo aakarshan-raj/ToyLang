@@ -1,25 +1,25 @@
-type NodeType = 'PROGRAM' | 'BINARY_EXPRESSION' | 'NUMERICAL_LITERAL' | 'IDENTIFIER'
+export type NodeType = 'PROGRAM' | 'BINARY_EXPRESSION' | 'NUMERICAL_LITERAL' | 'IDENTIFIER'
 
 
-interface Statement {
+export interface Statement {
     kind: NodeType
 }
-interface Program extends Statement {
+export interface Program extends Statement {
     kind: 'PROGRAM',
     body: Statement[]
 }
-interface Expression extends Statement { }
-interface BinaryExpression extends Expression {
+export interface Expression extends Statement { }
+export interface BinaryExpression extends Expression {
     kind: 'BINARY_EXPRESSION',
     left: number,
     right: number,
     operator: string
 }
-interface NumericalLiteral extends Expression {
+export interface NumericalLiteral extends Expression {
     kind: 'NUMERICAL_LITERAL',
     value: number
 }
-interface Identifier {
+export interface Identifier {
     kind: 'IDENTIFIER',
     symbol: string
 }

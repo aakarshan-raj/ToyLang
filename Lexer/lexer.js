@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isIgnoreable = exports.isNum = exports.isAlpha = exports.range = void 0;
+exports.Lexer = exports.isIgnoreable = exports.isNum = exports.isAlpha = exports.range = exports.Type = void 0;
 var fs = require("fs");
 var Type;
 (function (Type) {
@@ -12,7 +12,7 @@ var Type;
     Type[Type["Let"] = 5] = "Let";
     Type[Type["Identifier"] = 6] = "Identifier";
     Type[Type["EOF"] = 7] = "EOF";
-})(Type || (Type = {}));
+})(Type || (exports.Type = Type = {}));
 var reserved = {
     let: Type.Let
 };
@@ -94,9 +94,4 @@ function Lexer(src) {
     token.push(Fill("EOF", Type.EOF));
     return token;
 }
-var code = fs.readFileSync("code.tl", "utf-8");
-var data = Lexer(code);
-for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
-    var x = data_1[_i];
-    console.log(x);
-}
+exports.Lexer = Lexer;
