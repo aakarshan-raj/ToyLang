@@ -8,9 +8,9 @@ import {
 
 // First objective: read the tokens as AST types in body of program.
 
-class Parser {
+export class Parser {
 
-   private TOKEN: Token[] = [];
+   public TOKEN: Token[] = [];
 
    public NotTheEnd(): boolean {
       return this.TOKEN[0].type != Type.EOF;
@@ -58,7 +58,7 @@ class Parser {
 
 };
 
-const code = fs.readFileSync("../Lexer/code.tl", "utf-8");
+// const code = fs.readFileSync("../Lexer/code.tl", "utf-8");
 
-const parser: Parser = new Parser();
-parser.GenerateAst(code);
+// const parser: Parser = new Parser();
+// parser.GenerateAst(code);

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Parser = void 0;
 var fs = require('fs');
 var lexer_1 = require("../Lexer/lexer");
 // First objective: read the tokens as AST types in body of program.
@@ -47,7 +48,8 @@ var Parser = /** @class */ (function () {
     };
     return Parser;
 }());
+exports.Parser = Parser;
 ;
-var code = fs.readFileSync("../Lexer/code.tl", "utf-8");
-var parser = new Parser();
-parser.GenerateAst(code);
+// const code = fs.readFileSync("../Lexer/code.tl", "utf-8");
+// const parser: Parser = new Parser();
+// parser.GenerateAst(code);

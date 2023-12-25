@@ -7,7 +7,8 @@
     "test": "jest",
     "lexer": "cd Lexer && clear && tsc lexer.ts && node lexer.js",
     "ast": "cd AST && clear && tsc ast.ts && node ast.js",
-    "parser": "cd Parser && clear && tsc parser.ts && node parser.js"
+    "parser": "cd Parser && clear && tsc parser.ts && node parser.js",
+    "code": "cd Frontend && clear && tsc shell.ts && node shell.js"
 
 
   },
