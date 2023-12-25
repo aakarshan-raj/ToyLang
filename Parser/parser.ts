@@ -27,7 +27,13 @@ export class Parser {
 
       }
       console.log(program.body);
+      for (const x of program.body) {
+         if (x.kind == "BINARY_EXPRESSION") {
+
+         }
+      }
    }
+
 
    private getNextToken(): Token {
       const t = this.TOKEN[0];
@@ -36,6 +42,31 @@ export class Parser {
    }
 
    private parseToken(): Statement {
+      return this.parse_statement();
+   }
+
+   private parse_statement(): Expression {
+      return this.parse_expression();
+   }
+
+   private parse_expression(): Expression {
+      return this.parse_additive_expression()
+   }
+
+   private parse_additive_expression(): Expression {
+      let x = this.parse_primiary_expression();
+      while (this.TOKEN[0].value == "+" || this.TOKEN[0].value == "-") {
+         let y:BinaryExpression = {
+            kind: "BINARY_EXPRESSION",
+            left: x,
+            right:this.parse_primiary_expression(),
+            operator:this.TOKEN[0].value
+         };
+      }
+      return x;
+   }
+
+   private parse_primiary_expression() {
       const single_token = this.getNextToken();
       if (single_token.type == Type.Number) {
          return { kind: "NUMERICAL_LITERAL", value: parseInt(single_token.value) } as NumericalLiteral;
@@ -46,9 +77,6 @@ export class Parser {
       else if (single_token.type == Type.Let) {
          return { kind: "IDENTIFIER", symbol: single_token.value } as Identifier;
       }
-      else if (single_token.type == Type.BinaryOperator) {
-         return { kind: "BINARY_EXPRESSION", operator: single_token.value } as BinaryExpression;
-      }
       else {
          console.log("UNKNOWN TOKEN:" + single_token.value);
          process.exit(1);
@@ -58,7 +86,3 @@ export class Parser {
 
 };
 
-// const code = fs.readFileSync("../Lexer/code.tl", "utf-8");
-
-// const parser: Parser = new Parser();
-// parser.GenerateAst(code);
