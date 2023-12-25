@@ -11,8 +11,8 @@ export interface Program extends Statement {
 export interface Expression extends Statement { }
 export interface BinaryExpression extends Expression {
     kind: 'BINARY_EXPRESSION',
-    left: number,
-    right: number,
+    left: Expression,
+    right: Expression,
     operator: string
 }
 export interface NumericalLiteral extends Expression {
