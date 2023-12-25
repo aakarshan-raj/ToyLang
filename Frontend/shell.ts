@@ -9,7 +9,7 @@ const rl = readline.createInterface({
 const parser = new Parser();
 
 function readUserInput() {
-  rl.question('', (input) => {
+  rl.question('> ', (input) => {
     parser.GenerateAst(input);
     readUserInput();
   });

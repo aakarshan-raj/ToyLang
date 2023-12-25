@@ -6,7 +6,7 @@ var rl = readline.createInterface({
 });
 var parser = new Parser();
 function readUserInput() {
-    rl.question('', function (input) {
+    rl.question('> ', function (input) {
         parser.GenerateAst(input);
         readUserInput();
     });

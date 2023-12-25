@@ -26,12 +26,7 @@ export class Parser {
          program.body.push(this.parseToken());
 
       }
-      console.log(program.body);
-      for (const x of program.body) {
-         if (x.kind == "BINARY_EXPRESSION") {
-
-         }
-      }
+      console.log(JSON.stringify(program.body[0]));
    }
 
 
@@ -54,21 +49,21 @@ export class Parser {
    }
 
    private parse_additive_expression(): Expression {
-      let x = this.parse_primiary_expression();
-      let y:BinaryExpression = {} as BinaryExpression;
+      let left = this.parse_primiary_expression();
       while (this.TOKEN[0].value == "+" || this.TOKEN[0].value == "-") {
          let operator = this.getNextToken().value;
-         y = {
+         let right = this.parse_primiary_expression();
+         left = {
             kind: "BINARY_EXPRESSION",
-            left: x,
-            right:this.parse_primiary_expression(),
+            left,
+            right,
             operator
-         };
+         } as BinaryExpression;
       }
-      return y;
+      return left;
    }
 
-   private parse_primiary_expression() {
+   private parse_primiary_expression():Expression {
       const single_token = this.getNextToken();
       if (single_token.type == Type.Number) {
          return { kind: "NUMERICAL_LITERAL", value: parseInt(single_token.value) } as NumericalLiteral;

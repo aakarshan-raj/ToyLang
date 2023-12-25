@@ -20,12 +20,7 @@ var Parser = /** @class */ (function () {
         while (this.NotTheEnd()) {
             program.body.push(this.parseToken());
         }
-        console.log(program.body);
-        for (var _i = 0, _a = program.body; _i < _a.length; _i++) {
-            var x = _a[_i];
-            if (x.kind == "BINARY_EXPRESSION") {
-            }
-        }
+        console.log(JSON.stringify(program.body[0]));
     };
     Parser.prototype.getNextToken = function () {
         var t = this.TOKEN[0];
@@ -42,18 +37,18 @@ var Parser = /** @class */ (function () {
         return this.parse_additive_expression();
     };
     Parser.prototype.parse_additive_expression = function () {
-        var x = this.parse_primiary_expression();
-        var y = {};
+        var left = this.parse_primiary_expression();
         while (this.TOKEN[0].value == "+" || this.TOKEN[0].value == "-") {
             var operator = this.getNextToken().value;
-            y = {
+            var right = this.parse_primiary_expression();
+            left = {
                 kind: "BINARY_EXPRESSION",
-                left: x,
-                right: this.parse_primiary_expression(),
+                left: left,
+                right: right,
                 operator: operator
             };
         }
-        return y;
+        return left;
     };
     Parser.prototype.parse_primiary_expression = function () {
         var single_token = this.getNextToken();
