@@ -55,15 +55,17 @@ export class Parser {
 
    private parse_additive_expression(): Expression {
       let x = this.parse_primiary_expression();
+      let y:BinaryExpression = {} as BinaryExpression;
       while (this.TOKEN[0].value == "+" || this.TOKEN[0].value == "-") {
-         let y:BinaryExpression = {
+         let operator = this.getNextToken().value;
+         y = {
             kind: "BINARY_EXPRESSION",
             left: x,
             right:this.parse_primiary_expression(),
-            operator:this.TOKEN[0].value
+            operator
          };
       }
-      return x;
+      return y;
    }
 
    private parse_primiary_expression() {

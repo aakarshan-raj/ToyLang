@@ -43,15 +43,17 @@ var Parser = /** @class */ (function () {
     };
     Parser.prototype.parse_additive_expression = function () {
         var x = this.parse_primiary_expression();
+        var y = {};
         while (this.TOKEN[0].value == "+" || this.TOKEN[0].value == "-") {
-            var y = {
+            var operator = this.getNextToken().value;
+            y = {
                 kind: "BINARY_EXPRESSION",
                 left: x,
                 right: this.parse_primiary_expression(),
-                operator: this.TOKEN[0].value
+                operator: operator
             };
         }
-        return x;
+        return y;
     };
     Parser.prototype.parse_primiary_expression = function () {
         var single_token = this.getNextToken();
