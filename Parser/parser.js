@@ -17,7 +17,32 @@ var Parser = /** @class */ (function () {
             body: []
         };
         while (this.NotTheEnd()) {
-            console.log(this.TOKEN[0]);
+            program.body.push(this.parseToken());
+        }
+        console.log(program.body);
+    };
+    Parser.prototype.getNextToken = function () {
+        var t = this.TOKEN[0];
+        this.TOKEN.shift();
+        return t;
+    };
+    Parser.prototype.parseToken = function () {
+        var single_token = this.getNextToken();
+        if (single_token.type == lexer_1.Type.Number) {
+            return { kind: "NUMERICAL_LITERAL", value: parseInt(single_token.value) };
+        }
+        else if (single_token.type == lexer_1.Type.Identifier) {
+            return { kind: "IDENTIFIER", symbol: single_token.value };
+        }
+        else if (single_token.type == lexer_1.Type.Let) {
+            return { kind: "IDENTIFIER", symbol: single_token.value };
+        }
+        else if (single_token.type == lexer_1.Type.BinaryOperator) {
+            return { kind: "BINARY_EXPRESSION", operator: single_token.value };
+        }
+        else {
+            console.log("UNKNOWN TOKEN:" + single_token.value);
+            process.exit(1);
         }
     };
     return Parser;
