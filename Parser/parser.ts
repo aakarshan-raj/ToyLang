@@ -26,7 +26,7 @@ export class Parser {
          program.body.push(this.parseToken());
 
       }
-      console.log(JSON.stringify(program.body[0]));
+      console.log((program.body[0]));
    }
 
 
@@ -49,8 +49,23 @@ export class Parser {
    }
 
    private parse_additive_expression(): Expression {
-      let left = this.parse_primiary_expression();
+      let left = this.parse_multiplicative_expression();
       while (this.TOKEN[0].value == "+" || this.TOKEN[0].value == "-") {
+         let operator = this.getNextToken().value;
+         let right = this.parse_multiplicative_expression();
+         left = {
+            kind: "BINARY_EXPRESSION",
+            left,
+            right,
+            operator
+         } as BinaryExpression;
+      }
+      return left;
+   }
+
+   private parse_multiplicative_expression(): Expression {
+      let left = this.parse_primiary_expression();
+      while (this.TOKEN[0].value == "*" || this.TOKEN[0].value == "/") {
          let operator = this.getNextToken().value;
          let right = this.parse_primiary_expression();
          left = {
@@ -63,8 +78,10 @@ export class Parser {
       return left;
    }
 
+
    private parse_primiary_expression():Expression {
       const single_token = this.getNextToken();
+      console.log("Evaluating:("+single_token.value+")");
       if (single_token.type == Type.Number) {
          return { kind: "NUMERICAL_LITERAL", value: parseInt(single_token.value) } as NumericalLiteral;
       }
@@ -73,6 +90,17 @@ export class Parser {
       }
       else if (single_token.type == Type.Let) {
          return { kind: "IDENTIFIER", symbol: single_token.value } as Identifier;
+      }
+      else if(single_token.type == Type.OpenParen){
+         const exp = this.parse_expression();
+         console.log("outside parse token is:"+this.TOKEN[0].value);
+         if(this.TOKEN[0].type != Type.CloseParen ){
+            console.log(this.TOKEN[0]);
+            console.log("Expected closing paranthesis");
+            process.exit(1);
+         }
+         this.getNextToken();
+         return exp;
       }
       else {
          console.log("UNKNOWN TOKEN:" + single_token.value);

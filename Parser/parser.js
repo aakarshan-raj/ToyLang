@@ -20,7 +20,7 @@ var Parser = /** @class */ (function () {
         while (this.NotTheEnd()) {
             program.body.push(this.parseToken());
         }
-        console.log(JSON.stringify(program.body[0]));
+        console.log((program.body[0]));
     };
     Parser.prototype.getNextToken = function () {
         var t = this.TOKEN[0];
@@ -37,8 +37,22 @@ var Parser = /** @class */ (function () {
         return this.parse_additive_expression();
     };
     Parser.prototype.parse_additive_expression = function () {
-        var left = this.parse_primiary_expression();
+        var left = this.parse_multiplicative_expression();
         while (this.TOKEN[0].value == "+" || this.TOKEN[0].value == "-") {
+            var operator = this.getNextToken().value;
+            var right = this.parse_multiplicative_expression();
+            left = {
+                kind: "BINARY_EXPRESSION",
+                left: left,
+                right: right,
+                operator: operator
+            };
+        }
+        return left;
+    };
+    Parser.prototype.parse_multiplicative_expression = function () {
+        var left = this.parse_primiary_expression();
+        while (this.TOKEN[0].value == "*" || this.TOKEN[0].value == "/") {
             var operator = this.getNextToken().value;
             var right = this.parse_primiary_expression();
             left = {
@@ -52,6 +66,7 @@ var Parser = /** @class */ (function () {
     };
     Parser.prototype.parse_primiary_expression = function () {
         var single_token = this.getNextToken();
+        console.log("Evaluating:(" + single_token.value + ")");
         if (single_token.type == lexer_1.Type.Number) {
             return { kind: "NUMERICAL_LITERAL", value: parseInt(single_token.value) };
         }
@@ -60,6 +75,17 @@ var Parser = /** @class */ (function () {
         }
         else if (single_token.type == lexer_1.Type.Let) {
             return { kind: "IDENTIFIER", symbol: single_token.value };
+        }
+        else if (single_token.type == lexer_1.Type.OpenParen) {
+            var exp = this.parse_expression();
+            console.log("outside parse token is:" + this.TOKEN[0].value);
+            if (this.TOKEN[0].type != lexer_1.Type.CloseParen) {
+                console.log(this.TOKEN[0]);
+                console.log("Expected closing paranthesis");
+                process.exit(1);
+            }
+            this.getNextToken();
+            return exp;
         }
         else {
             console.log("UNKNOWN TOKEN:" + single_token.value);
