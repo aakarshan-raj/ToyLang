@@ -81,7 +81,6 @@ export class Parser {
 
    private parse_primiary_expression():Expression {
       const single_token = this.getNextToken();
-      console.log("Evaluating:("+single_token.value+")");
       if (single_token.type == Type.Number) {
          return { kind: "NUMERICAL_LITERAL", value: parseInt(single_token.value) } as NumericalLiteral;
       }
@@ -93,9 +92,7 @@ export class Parser {
       }
       else if(single_token.type == Type.OpenParen){
          const exp = this.parse_expression();
-         console.log("outside parse token is:"+this.TOKEN[0].value);
          if(this.TOKEN[0].type != Type.CloseParen ){
-            console.log(this.TOKEN[0]);
             console.log("Expected closing paranthesis");
             process.exit(1);
          }

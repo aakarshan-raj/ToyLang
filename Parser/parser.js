@@ -66,7 +66,6 @@ var Parser = /** @class */ (function () {
     };
     Parser.prototype.parse_primiary_expression = function () {
         var single_token = this.getNextToken();
-        console.log("Evaluating:(" + single_token.value + ")");
         if (single_token.type == lexer_1.Type.Number) {
             return { kind: "NUMERICAL_LITERAL", value: parseInt(single_token.value) };
         }
@@ -78,9 +77,7 @@ var Parser = /** @class */ (function () {
         }
         else if (single_token.type == lexer_1.Type.OpenParen) {
             var exp = this.parse_expression();
-            console.log("outside parse token is:" + this.TOKEN[0].value);
             if (this.TOKEN[0].type != lexer_1.Type.CloseParen) {
-                console.log(this.TOKEN[0]);
                 console.log("Expected closing paranthesis");
                 process.exit(1);
             }
