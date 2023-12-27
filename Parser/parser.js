@@ -20,7 +20,7 @@ var Parser = /** @class */ (function () {
         while (this.NotTheEnd()) {
             program.body.push(this.parseToken());
         }
-        console.log((program.body[0]));
+        return program;
     };
     Parser.prototype.getNextToken = function () {
         var t = this.TOKEN[0];

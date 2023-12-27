@@ -1,3 +1,5 @@
+import { Interpreter } from "../Interpreter/interpreter";
+
 const readline = require('readline');
 const { Parser } = require("../Parser/parser");
 
@@ -11,7 +13,9 @@ const parser = new Parser();
 function readUserInput() {
   rl.question('> ', (input) => {
     const program = parser.GenerateAst(input);
-    console.log(program);
+    console.log(program.body[0]);
+    const interpreted = Interpreter(program.body[0]);
+    console.log(interpreted);
     readUserInput();
   });
 }
