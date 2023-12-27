@@ -17,7 +17,7 @@ export class Parser {
       return this.TOKEN[0].type != Type.EOF;
    }
 
-   public GenerateAst(source_code: string) {
+   public GenerateAst(source_code: string):Program {
       this.TOKEN = Lexer(source_code);
       let program: Program = {
          kind: "PROGRAM",
@@ -27,7 +27,7 @@ export class Parser {
          program.body.push(this.parseToken());
 
       }
-      console.log((program.body[0]));
+      return program;
    }
 
 

@@ -10,7 +10,8 @@ const parser = new Parser();
 
 function readUserInput() {
   rl.question('> ', (input) => {
-    parser.GenerateAst(input);
+    const program = parser.GenerateAst(input);
+    console.log(program);
     readUserInput();
   });
 }
