@@ -75,6 +75,9 @@ var Parser = /** @class */ (function () {
         else if (single_token.type == lexer_1.Type.Let) {
             return { kind: "IDENTIFIER", symbol: single_token.value };
         }
+        else if (single_token.type == lexer_1.Type.Null) {
+            return { kind: "NULL", symbol: single_token.value };
+        }
         else if (single_token.type == lexer_1.Type.OpenParen) {
             var exp = this.parse_expression();
             if (this.TOKEN[0].type != lexer_1.Type.CloseParen) {

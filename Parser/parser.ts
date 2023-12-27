@@ -3,7 +3,8 @@ import { Lexer, Token, Type } from "../Lexer/lexer";
 import {
    Program, Statement, BinaryExpression,
    NumericalLiteral, Identifier, NodeType,
-   Expression
+   Expression,
+   NullLiteral
 } from "../AST/ast";
 
 // First objective: read the tokens as AST types in body of program.
@@ -89,6 +90,9 @@ export class Parser {
       }
       else if (single_token.type == Type.Let) {
          return { kind: "IDENTIFIER", symbol: single_token.value } as Identifier;
+      }
+      else if (single_token.type == Type.Null) {
+         return { kind: "NULL", symbol: single_token.value } as NullLiteral;
       }
       else if(single_token.type == Type.OpenParen){
          const exp = this.parse_expression();

@@ -11,10 +11,12 @@ var Type;
     Type[Type["Number"] = 4] = "Number";
     Type[Type["Let"] = 5] = "Let";
     Type[Type["Identifier"] = 6] = "Identifier";
-    Type[Type["EOF"] = 7] = "EOF";
+    Type[Type["Null"] = 7] = "Null";
+    Type[Type["EOF"] = 8] = "EOF";
 })(Type || (exports.Type = Type = {}));
 var reserved = {
-    let: Type.Let
+    let: Type.Let,
+    null: Type.Null
 };
 function Fill(value, type) {
     var t = { value: value, type: type };

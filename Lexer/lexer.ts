@@ -8,6 +8,7 @@ export enum Type {
     Number,
     Let,
     Identifier,
+    Null,
     EOF
 }
 export interface Token {
@@ -16,7 +17,8 @@ export interface Token {
 }
 
 const reserved: Record<string, Type> = {
-    let: Type.Let
+    let: Type.Let,
+    null: Type.Null
 };
 
 function Fill(value: string, type: Type) {
